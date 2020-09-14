@@ -7,11 +7,16 @@ day 1:
  - add a test project with xUnit and create test cases
  - test numbers 1 to 100, 0, -1 to -100
 day 2:
- - implement the find-if-a-number-is-prime algorithm
- - implement the find-next-prime-number algorithm (be careful when finding the next prime number on negative number)
+ - define a prime number:
+	A prime number (or a prime) is a natural number 
+	greater than 1 that is not a product of two smaller natural numbers.
+	Source: https://en.wikipedia.org/wiki/Prime_number
+ - implement the find-if-a-number-is-prime algorithm 
+ - implement the find-next-prime-number algorithm 
  - add an endpoint to each algorithm:
 	1) the number should be passed through the URL with /{id}
 	2) implement the API calls as GET methods	
+	3) create a common error response format
  - add Swagger UI 
 day 3: 
  - test the API with Insomnia
