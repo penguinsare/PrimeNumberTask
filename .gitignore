@@ -268,3 +268,10 @@ __pycache__/
 # Cake - Uncomment if you are using it
 # tools/
 /appsettings.Development.json
+obj
+/PrimeNumberTask/obj
+/PrimeNumberTask.Tests/obj
+/PrimeNumberTask.Lib/obj
+/PrimeNumberTask/bin
+/PrimeNumberTask.Tests/bin
+/PrimeNumberTask.Lib/bin
