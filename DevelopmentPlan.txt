@@ -1,0 +1,19 @@
+Project Development Plan
+
+day 1:
+ - set up a Web Api project with .Nert Core 3.1
+ - add github project und push to github
+ - add a library project for the algorithm
+ - add a test project with xUnit and create test cases
+ - test numbers 1 to 100, 0, -1 to -100
+day 2:
+ - implement the find-if-a-number-is-prime algorithm
+ - implement the find-next-prime-number algorithm (be careful when finding the next prime number on negative number)
+ - add an endpoint to each algorithm:
+	1) the number should be passed through the URL with /{id}
+	2) implement the API calls as GET methods	
+ - add Swagger UI 
+day 3: 
+ - test the API with Insomnia
+ - integration test for the endpoints if the time is enough
+ - write the dockerfile
