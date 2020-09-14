@@ -26,7 +26,9 @@ namespace PrimeNumberTask.Tests
             var exceptionMessage = "Since a prime number (or a prime) is defined as a natural number " +
                     "greater than 1, only numbers greater than 1 are accepted.";
             Action action = () => PrimeNumberHelper.IsPrimeNumber(number);
+
             Exception ex = Record.Exception(action);
+
             Assert.NotNull(ex);
             Assert.IsType<ArgumentOutOfRangeException>(ex);
             Assert.Equal(exceptionMessage, ((ArgumentOutOfRangeException)ex).ParamName);
@@ -37,8 +39,10 @@ namespace PrimeNumberTask.Tests
         public void IsPrimeNumber_NumberIsPrimeAndBiggerThanOne_True(int number, bool expected)
         {
             var stopwatch = Stopwatch.StartNew();
+
             bool isPrimeResult = PrimeNumberHelper.IsPrimeNumber(number);
             stopwatch.Stop();
+
             _output.WriteLine($"Elapsed time for number {number} is {stopwatch.ElapsedMilliseconds} ms.");
             Assert.Equal(expected, isPrimeResult);
         }
@@ -76,39 +80,43 @@ namespace PrimeNumberTask.Tests
         [Theory]
         [InlineData(-11)]
         [InlineData(-1)]
-        public void FindNextBiggerPrimeNumberAfter_NumberSmallerThanZero_ThrowArgumentOutOfRangeException(int number)
+        public void FindNextPrimeNumberBiggerOrEqual_NumberSmallerThanZero_ThrowArgumentOutOfRangeException(int number)
         {
             var exceptionMessage = "Since a prime number (or a prime) is defined as a natural number " +
                     "greater than 1, only numbers greater than or equal zero are accepted.";
-            Action action = () => PrimeNumberHelper.FindNextBiggerPrimeNumberAfter(number);
+            Action action = () => PrimeNumberHelper.FindNextPrimeNumberBiggerOrEqual(number);
+
             Exception ex = Record.Exception(action);
+
             Assert.NotNull(ex);
             Assert.IsType<ArgumentOutOfRangeException>(ex);
             Assert.Equal(exceptionMessage, ((ArgumentOutOfRangeException)ex).ParamName);
         }
 
         [Theory]
-        [MemberData(nameof(FindNextBiggerPrimeNumberTestData))]
-        public void FindNextBiggerPrimeNumberAfter_NumberBiggerThanOne_TheNextBiggerPrimeNumber(int number, int expectedPrimeNumber)
+        [MemberData(nameof(FindNextPrimeNumberTestData))]
+        public void FindNextPrimeNumberBiggerOrEqual_NumberBiggerThanOne_TheNextBiggerPrimeNumber(int number, int expectedPrimeNumber)
         {
             var stopwatch = Stopwatch.StartNew();
 
-            int primeNumber = PrimeNumberHelper.FindNextBiggerPrimeNumberAfter(number);
+            int primeNumber = PrimeNumberHelper.FindNextPrimeNumberBiggerOrEqual(number);
             stopwatch.Stop();
 
             Assert.Equal(expectedPrimeNumber, primeNumber);
         }
 
-        public static IEnumerable<object[]> FindNextBiggerPrimeNumberTestData()
+        public static IEnumerable<object[]> FindNextPrimeNumberTestData()
         {
-            yield return new object[] { 2, 3 };
-            yield return new object[] { 3, 5 };
+            yield return new object[] { 0, 2 };
+            yield return new object[] { 1, 2 };
+            yield return new object[] { 2, 2 };
+            yield return new object[] { 3, 3 };
             yield return new object[] { 4, 5 };
-            yield return new object[] { 5, 7 };
+            yield return new object[] { 5, 5 };
             yield return new object[] { 6, 7 };
-            yield return new object[] { 7, 11 };
+            yield return new object[] { 7, 7 };
             yield return new object[] { 10, 11 };
-            yield return new object[] { 11, 13 }; 
+            yield return new object[] { 11, 11 }; 
             yield return new object[] { 104724, 104729 };
             yield return new object[] { 10009730, 10009777 };
             yield return new object[] { 2000010924, 2000010949 };
