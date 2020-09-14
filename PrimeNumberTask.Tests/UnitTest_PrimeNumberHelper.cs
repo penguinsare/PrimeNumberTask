@@ -1,26 +1,49 @@
 using PrimeNumberTask.Lib;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace PrimeNumberTask.Tests
 {
     public class UnitTest_PrimeNumberHelper
     {
+        private readonly ITestOutputHelper _output;
+
+        public UnitTest_PrimeNumberHelper(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+        [Theory]
+        [InlineData(-100)]
+        [InlineData(-1)]
+        [InlineData(0)]
+        [InlineData(1)]
+        public void ThrowsArgumentOutOfRangeExceptionWhenNumberSmallerThanOne(int number)
+        {
+            var exceptionMessage = "Since a prime number (or a prime) is defined as a natural number " +
+                    "greater than 1, only numbers greater than 1 are accepted.";
+            Action action = () => PrimeNumberHelper.IsPrimeNumber(number);
+            Exception ex = Record.Exception(action);
+            Assert.NotNull(ex);
+            Assert.IsType<ArgumentOutOfRangeException>(ex);
+            Assert.Equal(exceptionMessage, ((ArgumentOutOfRangeException)ex).ParamName);
+        }
 
         [Theory]
         [MemberData(nameof(IsPrimeNumberDataTestData))]
-        public void ShouldReturnTrueIfANumberIsAPrimeNumber(int number, bool expected)
+        public void ReturnsTrueIfANumberIsAPrimeNumber(int number, bool expected)
         {
-
-            Assert.Equal(expected, PrimeNumberHelper.IsPrimeNumber(number));
+            var stopwatch = Stopwatch.StartNew();
+            bool isPrimeResult = PrimeNumberHelper.IsPrimeNumber(number);
+            stopwatch.Stop();
+            _output.WriteLine($"Elapsed time for number {number} is {stopwatch.ElapsedMilliseconds} ms.");
+            Assert.Equal(expected, isPrimeResult);
         }
 
         public static IEnumerable<object[]> IsPrimeNumberDataTestData()
         {
-            yield return new object[] { -1, false };
-            yield return new object[] { 0, false };
-            yield return new object[] { 1, false };
             yield return new object[] { 2, true };
             yield return new object[] { 3, true };
             yield return new object[] { 4, false };
@@ -43,8 +66,10 @@ namespace PrimeNumberTask.Tests
             yield return new object[] { 21, false };
             yield return new object[] { 22, false };
             yield return new object[] { 23, true };
-
-
+            yield return new object[] { 104728, false };
+            yield return new object[] { 104729, true };
+            yield return new object[] { 10009729, true };
+            yield return new object[] { 2147483629, true };
         }
     }
 }
