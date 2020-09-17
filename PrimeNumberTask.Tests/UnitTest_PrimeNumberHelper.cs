@@ -24,14 +24,14 @@ namespace PrimeNumberTask.Tests
         public void IsPrimeNumber_NumberSmallerThanOne_ThrowArgumentOutOfRangeException(int number)
         {
             var exceptionMessage = "Since a prime number (or a prime) is defined as a natural number " +
-                    "greater than 1, only numbers greater than 1 are accepted.";
+            "greater than 1, only numbers greater than 1 are accepted. (Parameter 'number')";
             Action action = () => PrimeNumberHelper.IsPrimeNumber(number);
 
             Exception ex = Record.Exception(action);
 
             Assert.NotNull(ex);
             Assert.IsType<ArgumentOutOfRangeException>(ex);
-            Assert.Equal(exceptionMessage, ((ArgumentOutOfRangeException)ex).ParamName);
+            Assert.Equal(exceptionMessage, ((ArgumentOutOfRangeException)ex).Message);
         }
 
         [Theory]
@@ -75,6 +75,7 @@ namespace PrimeNumberTask.Tests
             yield return new object[] { 104729, true };
             yield return new object[] { 10009729, true };
             yield return new object[] { 2147483629, true };
+            yield return new object[] { 2147483647, true };            
         }
 
         [Theory]
@@ -83,14 +84,14 @@ namespace PrimeNumberTask.Tests
         public void FindNextPrimeNumberBiggerOrEqual_NumberSmallerThanZero_ThrowArgumentOutOfRangeException(int number)
         {
             var exceptionMessage = "Since a prime number (or a prime) is defined as a natural number " +
-                    "greater than 1, only numbers greater than or equal zero are accepted.";
+            "greater than 1, only numbers greater than 1 are accepted. (Parameter 'number')";
             Action action = () => PrimeNumberHelper.FindNextPrimeNumberBiggerOrEqual(number);
 
             Exception ex = Record.Exception(action);
 
             Assert.NotNull(ex);
             Assert.IsType<ArgumentOutOfRangeException>(ex);
-            Assert.Equal(exceptionMessage, ((ArgumentOutOfRangeException)ex).ParamName);
+            Assert.Equal(exceptionMessage, ((ArgumentOutOfRangeException)ex).Message);
         }
 
         [Theory]
@@ -106,9 +107,7 @@ namespace PrimeNumberTask.Tests
         }
 
         public static IEnumerable<object[]> FindNextPrimeNumberTestData()
-        {
-            yield return new object[] { 0, 2 };
-            yield return new object[] { 1, 2 };
+        {            
             yield return new object[] { 2, 2 };
             yield return new object[] { 3, 3 };
             yield return new object[] { 4, 5 };
