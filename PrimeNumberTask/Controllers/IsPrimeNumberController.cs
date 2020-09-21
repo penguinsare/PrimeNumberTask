@@ -15,11 +15,14 @@ namespace PrimeNumberTask.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ProducesResponseType(typeof(OperationResult), 200)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
+    [ProducesResponseType(typeof(ProblemDetails), 500)]
     public class IsPrimeNumberController : ControllerBase
     {
 
         [HttpGet("{number}")]
-        public IActionResult CheckIfNumberIsPrime([Required] decimal number)
+        public ActionResult<OperationResult> CheckIfNumberIsPrime([Required] decimal number)
         {
             if (number > 2147483647)
                 return ValidationProblem(
@@ -57,7 +60,7 @@ namespace PrimeNumberTask.Controllers
             }
             catch(Exception)
             {
-                return BadRequest(new ProblemDetails()
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ProblemDetails()
                 {
                     Status = (int)HttpStatusCode.BadRequest,
                     Detail = ResponseErrors.UnknownError,
